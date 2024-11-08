@@ -1,0 +1,26 @@
+[project]
+name = "svr"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Lars Hansson", email = "romabysen@proton.me"},
+]
+dependencies = ["quart[dotenv]>=0.19.8", "quart-db>=0.8.3", "aiosqlite>=0.20.0", "inflect>=7.4.0"]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+_.env = {QUART_APP = "svr.app"}
+dev.cmd = "quart run --reload"
+dev.env = {QUART_DEBUG = "1"}
+dev.help = "Run the Quart development server"
+quart.cmd = "quart"
+quart.help = "Run the quart program"
+
+[dependency-groups]
+dev = ["pytest>=8.3.3", "pytest-env>=1.1.5"]

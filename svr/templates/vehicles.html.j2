@@ -1,0 +1,50 @@
+{% extends "layout.html.j2" %}
+
+{% from "components/table.html.j2" import vehicle_table %}
+
+{% block title %} - {{ current_faction["name"] if current_faction is defined else (current_class["name"] | plural) }}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+<div class="columns">
+    {% if current_faction is defined %}
+    <div class="column">
+        <div style="width: 6rem">
+            <figure class="image is-2by1">
+                <img src="{{ url_for('static', filename='img/faction-flags/' + current_faction['id'] + '.png') }}" />
+            </figure>
+        </div>
+    </div>
+    {% else %}
+    <div class="column">
+        <div style="width: 3rem">
+            <figure class="image is-square">
+                <img src="{{ url_for('static', filename='img/vehicle-class-icons/' + current_class['id'] + '.png') }}" />
+            </figure>
+        </div>
+    </div>
+    {% endif %}
+    <div class="column is-full">
+        <h2 class="title is-2">{{ current_faction["name"] if current_faction is defined else (current_class["name"] | plural) }}</h2>
+    </div>
+</div>
+{{ vehicle_table(vehicles) }}
+
+</div>
+{% endblock %}
+
+
+{% block bottomjs %}
+<script src="https://cdn.jsdelivr.net/npm/cash-dom/dist/cash.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".table-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".vehicle-table > tbody > tr > td.searchable").filter(function() {$(this).parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    $(".table-search").val("");
+});
+</script>
+{% endblock %}

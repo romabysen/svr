@@ -1,0 +1,35 @@
+{% macro vehicle_table(vehicles) -%}
+<div class="columns">
+<div class="column is-half">
+<input class="input table-search" type="text" placeholder="Vehicle name" />
+</div>
+</div>
+<table class="table is-hoverable vehicle-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th><abbr title="Vehicle class.">Class</abbr></th>
+            <th><abbr title="Number of seats that require a crew role.">Crew</abbr></th>
+            <th><abbr title="Number of passenger seats.">Passengers</abbr></th>
+            <th><abbr title="The ticket cost of losing the vehicle.">Tickets</abbr></th>
+            <th><abbr title="Default amount of loaded ammo points.">Ammo</abbr></th>
+            <th><abbr title="Default amount of loaded construction points.">Construction</abbr></th>
+            <th><abbr title="The total amount of cargo points.">Total</abbr></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for vehicle in vehicles %}
+        <tr>
+            <td class="searchable">{{ vehicle["name"] }}</td>
+            <td>{{ vehicle["class_name"] }}</td>
+            <td class="has-text-right">{{ vehicle["crew"] }}</td>
+            <td class="has-text-right">{{ vehicle["passengers"] }}</td>
+            <td class="has-text-right">{{ vehicle["ticket_cost"] }}</td>
+            <td class="has-text-right">{{ vehicle["ammo_points"] }}</td>
+            <td class="has-text-right">{{ vehicle["construction_points"] if vehicle["construction_points"] else '-'}}</td>
+            <td class="has-text-right">{{ vehicle["total_points"] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%- endmacro %}
