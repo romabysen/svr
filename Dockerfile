@@ -14,6 +14,6 @@ ENTRYPOINT ["/sbin/tini", "--"]
 WORKDIR /code
 CMD [\
     ".venv/bin/hypercorn",\
-    "svr.app",\
-    "-b 0.0.0.0:${PORT}"\
+    "-b 0.0.0.0:${PORT}",\
+    "svr.app"\
 ]
