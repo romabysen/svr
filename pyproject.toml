@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "Lars Hansson", email = "romabysen@proton.me"},
 ]
-dependencies = ["quart[dotenv]>=0.19.8", "quart-db>=0.8.3", "aiosqlite>=0.20.0", "inflect>=7.4.0"]
+dependencies = ["quart[dotenv]>=0.19.8", "aiosqlite>=0.20.0", "inflect>=7.4.0", "databases[aiopg]>=0.9.0"]
 requires-python = "==3.12.*"
 readme = "README.md"
 license = {text = "MIT"}

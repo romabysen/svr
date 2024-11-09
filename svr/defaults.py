@@ -1,2 +1,1 @@
-QUART_DB_DATABASE_URL = "sqlite:///.data/svqr.db"
-QUART_DB_MIGRATIONS_FOLDER = None
+DB_URL = "postgresql+aiopg://svr:password@localhost/svqr"
