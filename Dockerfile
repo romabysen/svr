@@ -15,5 +15,5 @@ WORKDIR /code
 CMD [\
     ".venv/bin/hypercorn",\
     "svr.app",\
-    "-b 0.0.0.0:8000"\
+    "-b :8000"\
 ]
