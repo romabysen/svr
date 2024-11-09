@@ -6,4 +6,4 @@ WORKDIR /code
 RUN pdm install --check --prod --no-editable
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD [".venv/bin/hypercorn", "-c", "file:deploy/quart.py", "svr.app"]
+CMD [".venv/bin/hypercorn", "-c", "file:deploy/hypercorn.py", "svr.app"]
