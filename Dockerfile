@@ -3,7 +3,7 @@ RUN apk add --no-cache tini && pip install --root-user-action=ignore pdm
 RUN mkdir /code
 COPY . /code/
 WORKDIR /code
-RUN pdm export -g -p /code/ -o requirements.txt && pip install --root-user-action=ignore -r requirements.txt
+RUN pdm install --check --prod --no-editable
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["hypercorn", "-c", "file:deploy/quart.py", "svr.app"]
+CMD [".venv/bin/hypercorn", "-c", "file:deploy/quart.py", "svr.app"]
