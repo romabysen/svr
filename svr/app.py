@@ -63,5 +63,5 @@ async def show_vehicle_class(klass):
 
 @app.route('/status')
 async def status():
-    database.status_query()
+    # database.status_query()
     return {"status": "ok"}
