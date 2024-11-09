@@ -1,55 +1,58 @@
+from sqlalchemy import select
+from sqlalchemy.sql.functions import coalesce
+
+from .db_schema import factions, faction_vehicles, vehicle_classes, vehicles
+
+
 async def get_faction(db, faction: str):
     return await db.fetch_one(
-            query="SELECT * FROM factions WHERE id = :id",
-            values={"id": faction}
+            query=select(factions).where(factions.c.id == faction)
         )
 
 
 async def get_class(db, klass: str):
     return await db.fetch_one(
-            query="SELECT * FROM vehicle_classes WHERE id = :id",
-            values={"id": klass}
+            query=select(vehicle_classes).where(vehicle_classes.c.id == klass)
         )
 
 
 async def get_factions(db):
     return await db.fetch_all(
-        "SELECT * FROM factions ORDER BY name"
+        query=select(factions).order_by(factions.c.name)
     )
 
 
 async def get_faction_vehicles(db, faction: str):
     return await db.fetch_all(
-        query="""SELECT
-vehicles.*, vc.name AS class_name,
-vehicles.ammo_points + COALESCE(vehicles.construction_points, 0) AS total_points
-FROM vehicles
-JOIN faction_vehicles ON vehicles.id = faction_vehicles.vehicle
-JOIN vehicle_classes AS vc ON vehicles.class = vc.id
-WHERE faction_vehicles.faction = :faction ORDER BY class""",  # noqa: E501
-        values={"faction": faction}
+        query=select(
+            vehicles,
+            vehicle_classes.c.name.label("class_name"),
+            (vehicles.c.ammo_points + coalesce(vehicles.c.construction_points, 0)).label("total_points")  # noqa: E501
+        ).select_from(
+            vehicles
+        ).join(
+            vehicle_classes, vehicles.c["class"] == vehicle_classes.c.id
+        ).join(
+            faction_vehicles, vehicles.c.id == faction_vehicles.c.vehicle
+        ).where(faction_vehicles.c.faction == faction)
     )
 
 
 async def get_class_vehicles(db, klass: str):
     return await db.fetch_all(
-        query="""SELECT
-vehicles.*, vc.name AS class_name,
-vehicles.ammo_points + COALESCE(vehicles.construction_points, 0) AS total_points
-FROM vehicles
-JOIN vehicle_classes AS vc ON vehicles.class = vc.id
-WHERE vehicles.class = :klass ORDER BY vehicles.name""",  # noqa: E501
-        values={"klass": klass}
+        query=select(
+            vehicles,
+            vehicle_classes.c.name.label("class_name"),
+            (vehicles.c.ammo_points + coalesce(vehicles.c.construction_points, 0)).label("total_points")  # noqa: E501
+        ).select_from(
+            vehicles
+        ).join(
+            vehicle_classes, vehicles.c["class"] == vehicle_classes.c.id
+        ).where(vehicle_classes.c.id == klass)
     )
 
 
 async def get_vehicles_classes(db):
     return await db.fetch_all(
-        """SELECT * FROM vehicle_classes ORDER BY name"""
-    )
-
-
-async def status_query(db):
-    return await db.fetch_one(
-        """SELECT COUNT(*) FROM factions"""
+        query=select(vehicle_classes).order_by(vehicle_classes.c.name)
     )
