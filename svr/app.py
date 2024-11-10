@@ -1,7 +1,7 @@
 from quart import Quart, render_template
 from databases import Database
 
-from . import cli, database, jinjafilters
+from . import cli, jinjafilters, queries
 
 app = Quart(__name__)
 app = cli.init_app(app)
@@ -13,8 +13,8 @@ app.add_template_filter(jinjafilters.plural, "plural")
 @app.route('/')
 async def show_index():
     async with Database(app.config["DB_URL"]) as db:
-        factions = await database.get_factions(db)
-        vehicle_classes = await database.get_vehicles_classes(db)
+        factions = await queries.get_factions(db)
+        vehicle_classes = await queries.get_vehicles_classes(db)
 
     return await render_template(
         'index.html.j2',
@@ -26,13 +26,13 @@ async def show_index():
 @app.route('/factions/<faction>')
 async def show_faction(faction):
     async with Database(app.config["DB_URL"]) as db:
-        current_faction = await database.get_faction(db, faction)
+        current_faction = await queries.get_faction(db, faction)
         if not current_faction:
             return "Faction not found", 404
 
-        factions = await database.get_factions(db)
-        vehicle_classes = await database.get_vehicles_classes(db)
-        vehicles = await database.get_faction_vehicles(db, faction)
+        factions = await queries.get_factions(db)
+        vehicle_classes = await queries.get_vehicles_classes(db)
+        vehicles = await queries.get_faction_vehicles(db, faction)
 
     return await render_template(
         'vehicles.html.j2',
@@ -46,13 +46,13 @@ async def show_faction(faction):
 @app.route('/vehicleclasses/<klass>')
 async def show_vehicle_class(klass):
     async with Database(app.config["DB_URL"]) as db:
-        current_class = await database.get_class(db, klass)
+        current_class = await queries.get_class(db, klass)
         if not current_class:
             return "Vehicle class not found", 404
 
-        factions = await database.get_factions(db)
-        vehicle_classes = await database.get_vehicles_classes(db)
-        vehicles = await database.get_class_vehicles(db, klass)
+        factions = await queries.get_factions(db)
+        vehicle_classes = await queries.get_vehicles_classes(db)
+        vehicles = await queries.get_class_vehicles(db, klass)
 
     return await render_template(
         'vehicles.html.j2',
