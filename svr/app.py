@@ -1,9 +1,10 @@
 from quart import Quart, render_template
 from databases import Database
 
-from . import database, jinjafilters
+from . import cli, database, jinjafilters
 
 app = Quart(__name__)
+app = cli.init_app(app)
 app.config.from_object("svr.defaults")
 app.config.from_prefixed_env(prefix="APP")
 app.add_template_filter(jinjafilters.plural, "plural")
