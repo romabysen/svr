@@ -34,7 +34,9 @@ async def get_faction_vehicles(db, faction: str):
             vehicle_classes, vehicles.c["class"] == vehicle_classes.c.id
         ).join(
             faction_vehicles, vehicles.c.id == faction_vehicles.c.vehicle
-        ).where(faction_vehicles.c.faction == faction)
+        ).where(faction_vehicles.c.faction == faction).order_by(
+            vehicle_classes.c.name, vehicles.c.name
+        )
     )
 
 
@@ -48,7 +50,9 @@ async def get_class_vehicles(db, klass: str):
             vehicles
         ).join(
             vehicle_classes, vehicles.c["class"] == vehicle_classes.c.id
-        ).where(vehicle_classes.c.id == klass)
+        ).where(vehicle_classes.c.id == klass).order_by(
+            vehicle_classes.c.name, vehicles.c.name
+        )
     )
 
 
