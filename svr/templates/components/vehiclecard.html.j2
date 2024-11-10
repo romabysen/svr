@@ -1,0 +1,34 @@
+{% macro vehicle_card() -%}
+<div class="card">
+  <div class="card-image">
+    <figure class="image is-16by9">
+      <img
+        id="card-vehicleimage"
+        src=""
+        alt=""
+      />
+    </figure>
+  </div>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <span id="card-vehiclename" class="title is-4"></span>   <span id="card-vehicleclass" class="ml-2 subtitle is-6"></span>
+      </div>
+    </div>
+
+    <table id="card-weapontable" class="table is-striped is-bordered is-fullwidth is-narrow">
+        <thead>
+            <tr class="has-background-grey">
+                <th>Name</th>
+                <th>Model</th>
+                <th>Caliber</th>
+                <th>Rounds</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+  </div>
+</div>
+{% endmacro %}

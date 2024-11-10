@@ -1,7 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.sql.functions import coalesce
 
-from .db_schema import factions, faction_vehicles, vehicle_classes, vehicles
+from .db_schema import armaments, factions, faction_vehicles, vehicle_classes
+from .db_schema import vehicles
 
 
 async def get_faction(db, faction: str):
@@ -60,3 +61,25 @@ async def get_vehicles_classes(db):
     return await db.fetch_all(
         query=select(vehicle_classes).order_by(vehicle_classes.c.name)
     )
+
+
+async def get_vehicle_details(db, vehicle_id: str):
+    vehicle = await db.fetch_one(
+        query=select(
+            vehicles,
+            vehicle_classes.c.name.label("class_name"),
+            (vehicles.c.ammo_points + coalesce(vehicles.c.construction_points, 0)).label("total_points")  # noqa :E501
+        ).join(
+            vehicle_classes, vehicles.c["class"] == vehicle_classes.c.id
+        ).where(vehicles.c.id == vehicle_id)
+    )
+    arms = await db.fetch_all(
+        query=select(
+            armaments
+        ).where(
+            armaments.c.vehicle == vehicle_id
+        ).order_by(armaments.c.order)
+    )
+    data = dict(vehicle)
+    data["armaments"] = [dict(row) for row in arms]
+    return data

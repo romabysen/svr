@@ -1,6 +1,7 @@
 {% extends "layout.html.j2" %}
 
 {% from "components/table.html.j2" import vehicle_table %}
+{% from "components/vehiclecard.html.j2" import vehicle_card %}
 
 {% block title %} - {{ current_faction["name"] if current_faction is defined else (current_class["name"] | plural) }}{% endblock %}
 
@@ -32,19 +33,17 @@
 {{ vehicle_table(vehicles) }}
 
 </div>
+<div id="vehicle-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+    {{ vehicle_card() }}
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
 {% endblock %}
 
 
 {% block bottomjs %}
 <script src="https://cdn.jsdelivr.net/npm/cash-dom/dist/cash.min.js"></script>
-<script>
-$(document).ready(function() {
-    $(".table-search").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $(".vehicle-table > tbody > tr > td.searchable").filter(function() {$(this).parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-    $(".table-search").val("");
-});
-</script>
+<script src="{{ url_for('static', filename='js/vehicle-page.js') }}"></script>
 {% endblock %}

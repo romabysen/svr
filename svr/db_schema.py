@@ -57,3 +57,14 @@ faction_vehicles = sqlalchemy.Table(
         primary_key=True
     ),
 )
+
+armaments = sqlalchemy.Table(
+    "armaments",
+    metadata,
+    sqlalchemy.Column("name", sqlalchemy.VARCHAR, primary_key=True),
+    sqlalchemy.Column("vehicle", sqlalchemy.VARCHAR, primary_key=True),
+    sqlalchemy.Column("model", sqlalchemy.VARCHAR, nullable=False),
+    sqlalchemy.Column("caliber", sqlalchemy.VARCHAR, nullable=False),
+    sqlalchemy.Column("ammo", sqlalchemy.JSON, nullable=False),
+    sqlalchemy.Column("order", sqlalchemy.INT, nullable=True)
+)

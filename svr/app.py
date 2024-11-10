@@ -1,4 +1,4 @@
-from quart import Quart, render_template
+from quart import Quart, render_template, url_for
 from databases import Database
 
 from . import cli, jinjafilters, queries
@@ -61,6 +61,18 @@ async def show_vehicle_class(klass):
         vehicles=vehicles,
         current_class=current_class
     )
+
+
+@app.route('/api/vehicles/<klass>')
+async def api_get_vehicle_details(klass):
+    async with Database(app.config["DB_URL"]) as db:
+        vehicle = await queries.get_vehicle_details(db, klass)
+        if not vehicle:
+            return "Vehicle not found", 404
+        vehicle['image'] = url_for(
+            "static", filename=f"img/vehicles/{vehicle['id']}.png"
+        )
+    return dict(vehicle)
 
 
 @app.route('/status')

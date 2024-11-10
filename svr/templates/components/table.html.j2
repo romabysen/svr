@@ -20,7 +20,7 @@
     <tbody>
         {% for vehicle in vehicles %}
         <tr>
-            <td class="searchable">{{ vehicle["name"] }}</td>
+            <td class="searchable"><a class="js-modal-trigger" data-vehicleid="{{ vehicle['id'] }}" data-target="vehicle-modal">{{ vehicle["name"] }}</a></td>
             <td>{{ vehicle["class_name"] }}</td>
             <td class="has-text-right">{{ vehicle["crew"] }}</td>
             <td class="has-text-right">{{ vehicle["passengers"] }}</td>
