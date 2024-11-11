@@ -1,3 +1,4 @@
+from quart import current_app
 from sqlalchemy import select
 from sqlalchemy.sql.functions import coalesce
 
@@ -81,5 +82,10 @@ async def get_vehicle_details(db, vehicle_id: str):
         ).order_by(armaments.c.order)
     )
     data = dict(vehicle)
+    for item in arms:
+        for option in item.ammo.get("options", []):
+            option["description"] = current_app.config[
+                "AMMO_OPTION_NAMES"
+            ].get(option["type"])
     data["armaments"] = [dict(row) for row in arms]
     return data

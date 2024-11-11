@@ -18,11 +18,6 @@ $(document).ready(function() {
 
   // Functions to open and close a modal
   async function openModal(el, vid) {
-    $("#card-vehiclename").text("");
-    $("#card-vehicleclass").text("");
-    $("#card-vehicleimage").attr("src", "");
-    $("#card-vehicleimage").attr("alt", "");
-    $("#card-weapontable tbody").empty();
     $(el).addClass('is-active')
     const data = await getData(vid);
     $("#card-vehiclename").text(data.name);
@@ -36,8 +31,12 @@ $(document).ready(function() {
             ammo = `${weapon.ammo.rounds}`;
         } else {
             $(weapon.ammo.options).each(async (_ix, load) => {
-                ammo = `${ammo}${load.name}: ${load.rounds}<br>`
-                console.log(load);
+              console.log(load);
+              if (load.description === null) {
+                  ammo = `${ammo}${load.name} ${load.type}: ${load.rounds}<br>`
+                } else {
+                  ammo = `${ammo}${load.name} <abbr title="${load.description}">${load.type}</abbr>: ${load.rounds}<br>`
+                }
             });
         }
         $('#card-weapontable tbody').append(`<tr><td>${weapon.name}</td><td>${weapon.model}</td><td>${weapon.caliber}</td><td>${ammo}</td></tr>`);
@@ -46,6 +45,11 @@ $(document).ready(function() {
 
   function closeModal(el) {
     $(el).removeClass('is-active');
+    $("#card-vehiclename").text("");
+    $("#card-vehicleclass").text("");
+    $("#card-vehicleimage").attr("src", "");
+    $("#card-vehicleimage").attr("alt", "");
+    $("#card-weapontable tbody").empty();
   }
 
   function closeAllModals() {
