@@ -32,8 +32,8 @@
                                 <div class="cell">Crewman seats: {{ vehicle.crew }}</div>
                                 <div class="cell">Passenger seats: {{ vehicle.passengers }}</div>
                                 <div class="cell">Ticket cost: {{ vehicle.ticket_cost }}</div>
-                                <div class="cell">Ammunition points: {{ vehicle.ammo_points}}</div>
-                                <div class="cell">Construction points: {{ vehicle.construction_points|default("-", boolean=True)}}</div>
+                                <div class="cell">Default ammunition points: {{ vehicle.ammo_points}}</div>
+                                <div class="cell">Default construction points: {{ vehicle.construction_points|default("-", boolean=True)}}</div>
                             </div>
                         </div>
                     </div>

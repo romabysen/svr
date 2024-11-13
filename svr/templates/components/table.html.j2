@@ -3,8 +3,7 @@
     <thead>
         <tr class="has-background-info-dark">
             <th>Name</th>
-            <th>Model</th>
-            <th>Caliber</th>
+            <th>Model & Caliber</th>
             <th>Rounds</th>
         </tr>
     </thead>
@@ -12,8 +11,7 @@
         {% for weapon in vehicle["armaments"] %}
         <tr>
             <td>{{ weapon["name"] }}</td>
-            <td>{{ weapon["model"] }}</td>
-            <td>{{ weapon["caliber"] }}</td>
+            <td>{{ weapon["model"] }}, {{ weapon["caliber"] }}</td>
             <td>
                 {% if weapon["ammo"]["rounds"] is defined %}
                     {{ weapon["ammo"]["rounds"] }}
