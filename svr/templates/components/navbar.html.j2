@@ -14,10 +14,10 @@
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">Factions</a>
+        <a class="navbar-link">Faction Vehicles</a>
         <div class="navbar-dropdown">
           {% for faction in factions %}
-          <a href="/factions/{{ faction['id'] }}" class="navbar-item">{{ faction['name'] }}</a>
+          <a href="{{ url_for('show_faction_vehicles', faction=faction['id']) }}" class="navbar-item">{{ faction['name'] }}</a>
           {% endfor %}
         </div>
       </div>
@@ -26,7 +26,7 @@
         <a class="navbar-link">Vehicle Classes</a>
         <div class="navbar-dropdown">
           {% for klass in vehicle_classes %}
-          <a href="/vehicleclasses/{{ klass['id'] }}" class="navbar-item">{{ klass["name"] | plural}}</a>
+          <a href="{{ url_for('show_vehicle_class', klass=klass['id']) }}" class="navbar-item">{{ klass["name"] | plural}}</a>
           {% endfor %}
         </div>
       </div>

@@ -14,6 +14,7 @@ vehicle_classes = sqlalchemy.Table(
     metadata,
     sqlalchemy.Column("id", sqlalchemy.VARCHAR, primary_key=True),
     sqlalchemy.Column("name", sqlalchemy.VARCHAR, nullable=False),
+    sqlalchemy.Column("abbreviation", sqlalchemy.VARCHAR, nullable=True),
 )
 
 vehicles = sqlalchemy.Table(

@@ -1,19 +1,23 @@
 {% from 'components/navbar.html.j2' import navbar %}
 <!doctype html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='defend.ico') }}">
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
-    >
-    <title>Squad Vehicle Reference{% block title %}{% endblock %}</title>
-    {% block head %}{% endblock %}
-  </head>
-  <body>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='defend.ico') }}">
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+        >
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/fontello.css')}}"
+        >
+        <title>Squad Vehicle Reference{% block title %}{% endblock %}</title>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
     {{ navbar(factions,vehicle_classes) }}
     <section class="section">{% block content %}{% endblock %}</section>
     {% block bottomjs %}{% endblock %}
-  </body>
+    </body>
 </html>

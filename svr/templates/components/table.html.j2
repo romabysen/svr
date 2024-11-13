@@ -1,33 +1,32 @@
-{% macro vehicle_table(vehicles) -%}
-<div class="columns">
-<div class="column is-half">
-<input class="input table-search" type="text" placeholder="Vehicle name" />
-</div>
-</div>
-<table class="table is-hoverable vehicle-table">
+{% macro armament_table(vehicle) -%}
+<table class="table is-striped is-bordered is-fullwidth is-narrow">
     <thead>
-        <tr>
+        <tr class="has-background-info-dark">
             <th>Name</th>
-            <th><abbr title="Vehicle class.">Class</abbr></th>
-            <th><abbr title="Number of seats that require a crew role.">Crew</abbr></th>
-            <th><abbr title="Number of passenger seats.">Passengers</abbr></th>
-            <th><abbr title="The ticket cost of losing the vehicle.">Tickets</abbr></th>
-            <th><abbr title="Default amount of loaded ammo points.">Ammo</abbr></th>
-            <th><abbr title="Default amount of loaded construction points.">Construction</abbr></th>
-            <th><abbr title="The total amount of cargo points.">Total</abbr></th>
+            <th>Model</th>
+            <th>Caliber</th>
+            <th>Rounds</th>
         </tr>
     </thead>
     <tbody>
-        {% for vehicle in vehicles %}
+        {% for weapon in vehicle["armaments"] %}
         <tr>
-            <td class="searchable"><a class="js-modal-trigger" data-vehicleid="{{ vehicle['id'] }}" data-target="vehicle-modal">{{ vehicle["name"] }}</a></td>
-            <td>{{ vehicle["class_name"] }}</td>
-            <td class="has-text-right">{{ vehicle["crew"] }}</td>
-            <td class="has-text-right">{{ vehicle["passengers"] }}</td>
-            <td class="has-text-right">{{ vehicle["ticket_cost"] }}</td>
-            <td class="has-text-right">{{ vehicle["ammo_points"] }}</td>
-            <td class="has-text-right">{{ vehicle["construction_points"] if vehicle["construction_points"] else '-'}}</td>
-            <td class="has-text-right">{{ vehicle["total_points"] }}</td>
+            <td>{{ weapon["name"] }}</td>
+            <td>{{ weapon["model"] }}</td>
+            <td>{{ weapon["caliber"] }}</td>
+            <td>
+                {% if weapon["ammo"]["rounds"] is defined %}
+                    {{ weapon["ammo"]["rounds"] }}
+                {% else %}
+                    {% for option in weapon["ammo"]["options"] %}
+                        {% if option.get("description") %}
+                    <div>{{ option["name"] }} <abbr title="{{ option['description'] }}">{{ option["type"] }}</abbr>: {{ option["rounds"] }}</div>
+                        {% else %}
+                    <div>{{ option["name"] }} {{ option["type"] }}: {{ option["rounds"] }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>

@@ -1,7 +1,6 @@
 {% extends "layout.html.j2" %}
 
-{% from "components/table.html.j2" import vehicle_table %}
-{% from "components/vehiclecard.html.j2" import vehicle_card %}
+{% from "components/grid.html.j2" import vehicle_grid %}
 
 {% block title %} - {{ current_faction["name"] if current_faction is defined else (current_class["name"] | plural) }}{% endblock %}
 
@@ -30,15 +29,11 @@
         <h2 class="title is-2">{{ current_faction["name"] if current_faction is defined else (current_class["name"] | plural) }}</h2>
     </div>
 </div>
-{{ vehicle_table(vehicles) }}
-
+<div class="block">
+<input class="input table-search" type="text" placeholder="Vehicle name" />
 </div>
-<div id="vehicle-modal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-content">
-    {{ vehicle_card() }}
-    </div>
-    <button class="modal-close is-large" aria-label="close"></button>
+{{ vehicle_grid(vehicles) }}
+
 </div>
 {% endblock %}
 

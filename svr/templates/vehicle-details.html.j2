@@ -1,0 +1,56 @@
+{% from "components/table.html.j2" import armament_table %}
+
+{% extends "layout.html.j2" %}
+
+{% block title %} - {{ vehicle["name"] }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="block has-text-centered">
+        <h2 class="mb-0 title is-2">{{ vehicle["name"] }}</h2>
+        <div class="subtitle is-6">{{ vehicle['class_name'] }}</div>
+    </div>
+    <div class="columns">
+        <div class="column">
+            <figure class="image is-16by9">
+            <img
+                src="{{ url_for('static', filename='img/vehicles/' + vehicle['id'] + '.jpg') }}"
+                alt="{{ vehicle['name'] }}"
+            />
+            </figure>
+        </div>
+        <div class="column">
+
+            <div class="card">
+                <header class="card-header has-background-link">
+                    <p class="card-header-title py-2 is-centered">Details</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="fixed-grid has-auto-count">
+                            <div class="grid">
+                                <div class="cell">Crewman seats: {{ vehicle.crew }}</div>
+                                <div class="cell">Passenger seats: {{ vehicle.passengers }}</div>
+                                <div class="cell">Ticket cost: {{ vehicle.ticket_cost }}</div>
+                                <div class="cell">Ammunition points: {{ vehicle.ammo_points}}</div>
+                                <div class="cell">Construction points: {{ vehicle.construction_points|default("-", boolean=True)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <header class="card-header has-background-link">
+                    <p class="card-header-title py-2 is-centered">Armaments</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                    {{ armament_table(vehicle) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

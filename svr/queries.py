@@ -29,6 +29,7 @@ async def get_faction_vehicles(db, faction: str):
         query=select(
             vehicles,
             vehicle_classes.c.name.label("class_name"),
+            vehicle_classes.c.abbreviation.label("class_abbr"),
             (vehicles.c.ammo_points + coalesce(vehicles.c.construction_points, 0)).label("total_points")  # noqa: E501
         ).select_from(
             vehicles
@@ -47,6 +48,7 @@ async def get_class_vehicles(db, klass: str):
         query=select(
             vehicles,
             vehicle_classes.c.name.label("class_name"),
+            vehicle_classes.c.abbreviation.label("class_abbr"),
             (vehicles.c.ammo_points + coalesce(vehicles.c.construction_points, 0)).label("total_points")  # noqa: E501
         ).select_from(
             vehicles
@@ -69,6 +71,7 @@ async def get_vehicle_details(db, vehicle_id: str):
         query=select(
             vehicles,
             vehicle_classes.c.name.label("class_name"),
+            vehicle_classes.c.abbreviation.label("class_abbr"),
             (vehicles.c.ammo_points + coalesce(vehicles.c.construction_points, 0)).label("total_points")  # noqa :E501
         ).join(
             vehicle_classes, vehicles.c["class"] == vehicle_classes.c.id

@@ -1,0 +1,70 @@
+{% macro vehicle_grid(vehicles) -%}
+<div class="box">
+    <div class="columns is-multiline">
+        <div class="column p-1"><span class="icon"><i class="icon icon-steering"></i></span> = Seats requiring a crewman role.</div>
+        <div class="column p-1"><span class="icon"><i class="icon icon-seat-passenger"></i></span> = Seats not requiring a crewman role.</div>
+        <div class="column p-1"><span class="icon"><i class="icon icon-ammunition"></i></span> = Default loaded ammunition points.</div>
+        <div class="column p-1"><span class="icon"><i class="icon icon-hammer-screwdriver"></i></span> = Default loaded construction points.</div>
+    </div>
+</div>
+<div class="columns is-multiline">
+    {% for vehicle in vehicles %}
+    <div class="column is-one-fifth">{{ card(vehicle) }}</div>
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro card(vehicle) %}
+<div class="card">
+    <div class="card-image">
+        <a href="{{ url_for('show_vehicle_details', id=vehicle.id) }}">
+        <figure class="image is-16by9">
+            <img
+            src="{{ url_for('static', filename='img/vehicles/' + vehicle.id + '-small.jpg')}}"
+            alt="{{ vehicle.name }}"
+            />
+        </figure>
+        </a>
+    </div>
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-6">
+                    <a href="{{ url_for('show_vehicle_details', id=vehicle.id) }}"><span class="searchable">{{ vehicle.name }}</span></a>
+                </p>
+                <p class="subtitle is-7">
+                {% if vehicle.class_abbr is none %}
+                {{ vehicle.class_name }}
+                {% else %}
+                <abbr title="{{ vehicle.class_name }}">{{ vehicle.class_abbr }}</abbr>
+                {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="columns is-mobile is-multiline has-text-centered">
+                <div class="column">
+                    <span class="icon">
+                        <i class="icon icon-steering"></i>
+                    </span> {{ vehicle.crew }}
+                </div>
+                <div class="column">
+                    <span class="icon">
+                        <i class="icon icon-seat-passenger"></i>
+                    </span> {{ vehicle.passengers }}
+                </div>
+                <div class="column">
+                    <span class="icon">
+                        <i class="icon icon-ammunition"></i>
+                    </span> {{ vehicle.ammo_points }}
+                </div>
+                <div class="column">
+                    <span class="icon">
+                        <i class="icon icon-hammer-screwdriver"></i>
+                    </span> {{ vehicle.construction_points | default("-", boolean=True)}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
