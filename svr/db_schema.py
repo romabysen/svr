@@ -26,7 +26,7 @@ vehicles = sqlalchemy.Table(
         "class",
         sqlalchemy.VARCHAR,
         sqlalchemy.ForeignKey(
-            "vehicle_classes.id", onupdate="CASCADE", ondelete="CASCADE"
+            "vehicle_classes.id", onupdate="CASCADE", ondelete="RESTRICT"
         ),
         nullable=False
     ),
@@ -45,7 +45,7 @@ faction_vehicles = sqlalchemy.Table(
         "faction",
         sqlalchemy.VARCHAR,
         sqlalchemy.ForeignKey(
-            "factions.id", onupdate="CASCADE", ondelete="CASCADE"
+            "factions.id", onupdate="CASCADE", ondelete="RESTRICT"
         ),
         primary_key=True
     ),
@@ -53,7 +53,7 @@ faction_vehicles = sqlalchemy.Table(
         "vehicle",
         sqlalchemy.VARCHAR,
         sqlalchemy.ForeignKey(
-            "vehicles.id", onupdate="CASCADE", ondelete="CASCADE"
+            "vehicles.id", onupdate="CASCADE", ondelete="RESTRICT"
         ),
         primary_key=True
     ),
@@ -67,7 +67,7 @@ armaments = sqlalchemy.Table(
         "vehicle",
         sqlalchemy.VARCHAR,
         sqlalchemy.ForeignKey(
-            "vehicles.id", onupdate="CASCADE", ondelete="CASCADE"
+            "vehicles.id", onupdate="CASCADE", ondelete="RESTRICT"
         ),
         primary_key=True
     ),

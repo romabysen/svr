@@ -11,7 +11,7 @@
         {% for weapon in vehicle["armaments"] %}
         <tr>
             <td>{{ weapon["name"] }}</td>
-            <td>{{ weapon["model"] }}, {{ weapon["caliber"] }}</td>
+            <td>{{ weapon["model"] }}, {{ weapon["caliber"] | default("", boolean=True)}}</td>
             <td>
                 {% if weapon["ammo"]["rounds"] is defined %}
                     {{ weapon["ammo"]["rounds"] }}
