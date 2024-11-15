@@ -18,6 +18,16 @@
     <body>
     {{ navbar(factions,vehicle_classes) }}
     <section class="section">{% block content %}{% endblock %}</section>
+
+    <footer class="footer p-4">
+        <div class="content has-text-centered">
+            <p>
+                Built with <strong>Bulma</strong>.
+                Flag images from the <a href="https://squad.fandom.com/wiki/Squad_Wiki">Squad Wiki</a>, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//">CC BY NC SA 4.0</a>.
+            </p>
+        </div>
+    </footer>
+
     {% block bottomjs %}{% endblock %}
     </body>
 </html>
