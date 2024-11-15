@@ -5,5 +5,6 @@ AMMO_OPTION_NAMES = {
     "ATGM": "Anti-Tank Guided Missile",
     "HESH": "High Explosive Squash Head",
     "HE-MP-T": "High-Explosive Multi-Purpose Tracer",
-    "HE": "High-Explosive"
+    "HE": "High-Explosive",
+    "HE-frag-FS": "High-Explosive Fragmentation Fin-Stabilized"
 }
