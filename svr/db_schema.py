@@ -79,8 +79,8 @@ armaments = Table(
         ),
         primary_key=True
     ),
+    Column("order", INTEGER, nullable=True),
     Column("model", VARCHAR, nullable=False),
     Column("caliber", VARCHAR, nullable=False),
-    Column("ammo", JSON, nullable=False),
-    Column("order", INTEGER, nullable=True)
+    Column("ammo", JSON, nullable=False)
 )
