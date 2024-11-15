@@ -2,7 +2,7 @@
 
 {% from "components/grid.html.j2" import vehicle_grid %}
 
-{% block title %} - {{ current_faction["name"] if current_faction is defined else (current_class["name"] | plural) }}{% endblock %}
+{% block title %}{{ current_faction["name"] if current_faction is defined else (current_class["name"] | plural) }} - {% endblock %}
 
 {% block content %}
 <div class="container">

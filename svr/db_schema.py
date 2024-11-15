@@ -1,78 +1,86 @@
-import sqlalchemy
+from sqlalchemy import MetaData, Table, Column, ForeignKey, text
+from sqlalchemy import BOOLEAN, INTEGER, JSON, VARCHAR
 
-metadata = sqlalchemy.MetaData()
+metadata = MetaData()
 
-factions = sqlalchemy.Table(
+factions = Table(
     "factions",
     metadata,
-    sqlalchemy.Column("id", sqlalchemy.VARCHAR, primary_key=True),
-    sqlalchemy.Column("name", sqlalchemy.VARCHAR, nullable=False),
+    Column("id", VARCHAR, primary_key=True),
+    Column("name", VARCHAR, nullable=False),
 )
 
-vehicle_classes = sqlalchemy.Table(
+vehicle_classes = Table(
     "vehicle_classes",
     metadata,
-    sqlalchemy.Column("id", sqlalchemy.VARCHAR, primary_key=True),
-    sqlalchemy.Column("name", sqlalchemy.VARCHAR, nullable=False),
-    sqlalchemy.Column("abbreviation", sqlalchemy.VARCHAR, nullable=True),
+    Column("id", VARCHAR, primary_key=True),
+    Column("name", VARCHAR, nullable=False)
 )
 
-vehicles = sqlalchemy.Table(
+vehicles = Table(
     "vehicles",
     metadata,
-    sqlalchemy.Column("id", sqlalchemy.VARCHAR, primary_key=True),
-    sqlalchemy.Column("name", sqlalchemy.VARCHAR, nullable=False),
-    sqlalchemy.Column(
+    Column("id", VARCHAR, primary_key=True),
+    Column("name", VARCHAR, nullable=False),
+    Column(
         "class",
-        sqlalchemy.VARCHAR,
-        sqlalchemy.ForeignKey(
+        VARCHAR,
+        ForeignKey(
             "vehicle_classes.id", onupdate="CASCADE", ondelete="RESTRICT"
         ),
         nullable=False
     ),
-    sqlalchemy.Column("crew", sqlalchemy.INT, nullable=False),
-    sqlalchemy.Column("passengers", sqlalchemy.INT, nullable=False),
-    sqlalchemy.Column("ticket_cost", sqlalchemy.INT, nullable=False),
-    sqlalchemy.Column("ammo_points", sqlalchemy.INT, nullable=False),
-    sqlalchemy.Column("construction_points", sqlalchemy.INT, nullable=True),
+    Column("crew", INTEGER, nullable=False),
+    Column("passengers", INTEGER, nullable=False),
+    Column("ticket_cost", INTEGER, nullable=False),
+    Column("ammo_points", INTEGER, nullable=False),
+    Column(
+        "construction_points", INTEGER, nullable=True
+    ),
+    Column(
+        "amphibious",
+        BOOLEAN,
+        nullable=False,
+        server_default=text("FALSE")
+    )
 )
 
 
-faction_vehicles = sqlalchemy.Table(
+faction_vehicles = Table(
     "faction_vehicles",
     metadata,
-    sqlalchemy.Column(
+    Column(
         "faction",
-        sqlalchemy.VARCHAR,
-        sqlalchemy.ForeignKey(
+        VARCHAR,
+        ForeignKey(
             "factions.id", onupdate="CASCADE", ondelete="RESTRICT"
         ),
         primary_key=True
     ),
-    sqlalchemy.Column(
+    Column(
         "vehicle",
-        sqlalchemy.VARCHAR,
-        sqlalchemy.ForeignKey(
+        VARCHAR,
+        ForeignKey(
             "vehicles.id", onupdate="CASCADE", ondelete="RESTRICT"
         ),
         primary_key=True
     ),
 )
 
-armaments = sqlalchemy.Table(
+armaments = Table(
     "armaments",
     metadata,
-    sqlalchemy.Column("name", sqlalchemy.VARCHAR, primary_key=True),
-    sqlalchemy.Column(
+    Column("name", VARCHAR, primary_key=True),
+    Column(
         "vehicle",
-        sqlalchemy.VARCHAR,
-        sqlalchemy.ForeignKey(
+        VARCHAR,
+        ForeignKey(
             "vehicles.id", onupdate="CASCADE", ondelete="RESTRICT"
         ),
         primary_key=True
     ),
-    sqlalchemy.Column("model", sqlalchemy.VARCHAR, nullable=False),
-    sqlalchemy.Column("caliber", sqlalchemy.VARCHAR, nullable=False),
-    sqlalchemy.Column("ammo", sqlalchemy.JSON, nullable=False),
-    sqlalchemy.Column("order", sqlalchemy.INT, nullable=True)
+    Column("model", VARCHAR, nullable=False),
+    Column("caliber", VARCHAR, nullable=False),
+    Column("ammo", JSON, nullable=False),
+    Column("order", INTEGER, nullable=True)
 )

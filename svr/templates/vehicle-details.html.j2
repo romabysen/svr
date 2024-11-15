@@ -2,7 +2,7 @@
 
 {% extends "layout.html.j2" %}
 
-{% block title %} - {{ vehicle["name"] }}{% endblock %}
+{% block title %}{{ vehicle["name"] }} - {% endblock %}
 
 {% block content %}
 <div class="container">
@@ -13,10 +13,11 @@
     <div class="columns">
         <div class="column">
             <figure class="image is-16by9">
-            <img
-                src="{{ url_for('static', filename='img/vehicles/' + vehicle['id'] + '.jpg') }}"
-                alt="{{ vehicle['name'] }}"
-            />
+                {% set imgfile = 'img/vehicles/%s/%s.jpg' % (vehicle.class, vehicle.id) %}
+                <img
+                    src="{{ url_for('static', filename=imgfile) }}"
+                    alt="{{ vehicle['name'] }}"
+                />
             </figure>
         </div>
         <div class="column">
@@ -34,6 +35,7 @@
                                 <div class="cell">Ticket cost: {{ vehicle.ticket_cost }}</div>
                                 <div class="cell">Default ammunition points: {{ vehicle.ammo_points}}</div>
                                 <div class="cell">Default construction points: {{ vehicle.construction_points|default("-", boolean=True)}}</div>
+                                <div class="cell">Amphibious: {{ 'Yes' if vehicle.amphibious else 'No' }}</div>
                             </div>
                         </div>
                     </div>

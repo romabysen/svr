@@ -1,10 +1,11 @@
 {% macro vehicle_grid(vehicles) -%}
 <div class="box">
     <div class="columns is-multiline">
-        <div class="column p-1"><span class="icon"><i class="icon icon-steering"></i></span>= Seats requiring a crewman role.</div>
-        <div class="column p-1"><span class="icon"><i class="icon icon-seat-passenger"></i></span>= Seats not requiring a crewman role.</div>
-        <div class="column p-1"><span class="icon"><i class="icon icon-ammunition"></i></span>= Default loaded ammunition points.</div>
-        <div class="column p-1"><span class="icon"><i class="icon icon-hammer-screwdriver"></i></span>= Default loaded construction points.</div>
+        <div class="column p-1"><span class="icon"><i class="icon icon-steering"></i></span>= Crewman seats.</div>
+        <div class="column p-1"><span class="icon"><i class="icon icon-seat-passenger"></i></span>= Passenger seats.</div>
+        <div class="column p-1"><span class="icon"><i class="icon icon-ammunition"></i></span>= Default ammunition points.</div>
+        <div class="column p-1"><span class="icon"><i class="icon icon-hammer-screwdriver"></i></span>= Default construction points.</div>
+        <div class="column p-1"><span class="icon"><i class="icon icon-ship-wheel"></i></span>= Amphibious.</div>
     </div>
 </div>
 <div class="columns is-multiline">
@@ -19,8 +20,9 @@
     <div class="card-image">
         <a href="{{ url_for('show_vehicle_details', id=vehicle.id) }}">
         <figure class="image is-16by9">
+            {% set imgfile = 'img/vehicles/%s/%s-small.jpg' % (vehicle.class, vehicle.id) %}
             <img
-            src="{{ url_for('static', filename='img/vehicles/' + vehicle.id + '-small.jpg')}}"
+            src="{{ url_for('static', filename=imgfile)}}"
             alt="{{ vehicle.name }}"
             />
         </figure>
@@ -29,15 +31,18 @@
     <div class="card-content">
         <div class="media">
             <div class="media-content">
-                <p class="title is-6">
-                    <a href="{{ url_for('show_vehicle_details', id=vehicle.id) }}"><span class="searchable">{{ vehicle.name }}</span></a>
+                <p>
+                    <span class="title is-6">
+                        <a href="{{ url_for('show_vehicle_details', id=vehicle.id) }}"><span class="searchable">{{ vehicle.name }}</span></a>
+                    </span>
+                    {% if vehicle.amphibious %}
+                    <span class="icon">
+                        <i class="icon icon-ship-wheel"></i>
+                    </span>
+                    {% endif %}
                 </p>
                 <p class="subtitle is-7">
-                {% if vehicle.class_abbr is none %}
                 {{ vehicle.class_name }}
-                {% else %}
-                <abbr title="{{ vehicle.class_name }}">{{ vehicle.class_abbr }}</abbr>
-                {% endif %}
                 </p>
             </div>
         </div>
